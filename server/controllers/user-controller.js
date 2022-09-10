@@ -1,11 +1,14 @@
-import express from 'express';
-import mongoose from 'mongoose';
+import User from "../model/User";
 
-const app = express();
-
-mongoose.connect('mongodb+srv://admin:andrey1234@cluster0.jczpais.mongodb.net/ukrblog?retryWrites=true&w=majority')
-.then(()=>app.listen(5000))
-.then(()=>console.log("Connected to the database and listening to localhost 5000"))
-.catch((err)=>console.log(err));
-
-app.listen(5000);
+export const getAllUsers = async (req, res, next) => {
+    let users;
+    try {
+        users = await User.find();
+    }catch(err) {
+        console.log(err)
+    }
+    if(!user) {
+        return res.status(404).json({message: "No users found" });
+    }
+    return res.status(200).json({users});
+}
